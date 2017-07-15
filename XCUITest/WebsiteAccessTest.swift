@@ -37,7 +37,7 @@ class WebsiteAccessTests: BaseTestCase {
         app.typeText("\n")
         
         // Check the correct site is reached
-        waitForValueContains(element: label, value: "https://www.mozilla.org/en-US/")
+        waitForValueContains(element: label, value: "https://www.mozilla.org")
         
         // Erase the history
         app.buttons["ERASE"].tap()
