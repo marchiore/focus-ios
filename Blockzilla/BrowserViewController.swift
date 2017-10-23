@@ -578,6 +578,7 @@ extension BrowserViewController: OverlayViewDelegate {
             Telemetry.default.recordEvent(category: TelemetryEventCategory.action, method: TelemetryEventMethod.selectQuery, object: TelemetryEventObject.searchBar)
             submit(url: url)
             urlBar.url = url
+            urlBar.fillUrlBar(text: query)
         }
 
         urlBar.dismiss()
