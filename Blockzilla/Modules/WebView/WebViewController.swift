@@ -26,7 +26,7 @@ protocol WebControllerDelegate: class {
     func webControllerDidFinishNavigation(_ controller: WebController)
     func webController(_ controller: WebController, didFailNavigationWithError error: Error)
     func webController(_ controller: WebController, didUpdateCanGoBack canGoBack: Bool)
-    func webController(_ controller: WebController, didUpdateCanGoForward canGoForward: Bool)
+    func webController(_ controller: WebController, didUpdateCanGoForward canGoForward: Bool, webView: WKWebView)
     func webController(_ controller: WebController, didUpdateEstimatedProgress estimatedProgress: Double)
     func webController(_ controller: WebController, scrollViewWillBeginDragging scrollView: UIScrollView)
     func webController(_ controller: WebController, scrollViewDidEndDragging scrollView: UIScrollView)
@@ -109,7 +109,7 @@ class WebViewController: UIViewController, WebController {
 
     fileprivate func updateBackForwardState(webView: WKWebView) {
         delegate?.webController(self, didUpdateCanGoBack: canGoBack)
-        delegate?.webController(self, didUpdateCanGoForward: canGoForward)
+        delegate?.webController(self, didUpdateCanGoForward: canGoForward, webView: webView)
     }
 
     private func setupBlockLists() {

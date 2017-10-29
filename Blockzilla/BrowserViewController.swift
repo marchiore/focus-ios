@@ -6,6 +6,7 @@ import Foundation
 import UIKit
 import SnapKit
 import Telemetry
+import WebKit
 
 class BrowserViewController: UIViewController {
     private class DrawerView: UIView {
@@ -636,9 +637,15 @@ extension BrowserViewController: WebControllerDelegate {
         browserToolbar.canGoBack = canGoBack
     }
 
-    func webController(_ controller: WebController, didUpdateCanGoForward canGoForward: Bool) {
+    func webController(_ controller: WebController, didUpdateCanGoForward canGoForward: Bool, webView: WKWebView) {
         urlBar.canGoForward = canGoForward
         browserToolbar.canGoForward = canGoForward
+        let query = getQuery(url: webView.url!)
+        if let searchedText = query["q"] {
+            urlBar.fillUrlBar(text: searchedText)
+        } else {
+            urlBar.fillUrlBar(text: (webView.url?.absoluteString)!)
+        }
     }
 
     func webController(_ controller: WebController, didUpdateEstimatedProgress estimatedProgress: Double) {
@@ -769,6 +776,21 @@ extension BrowserViewController: WebControllerDelegate {
         } else {
             hideToolbars()
         }
+    }
+
+    func getQuery(url: URL) -> [String: String] {
+        var results = [String: String]()
+        let keyValues =  url.query?.components(separatedBy: "&")
+
+        if keyValues?.count ?? 0 > 0 {
+            for pair in keyValues! {
+                let kv = pair.components(separatedBy: "=")
+                if kv.count > 1 {
+                    results[kv[0]] = kv[1]
+                }
+            }
+        }
+        return results
     }
 }
 
