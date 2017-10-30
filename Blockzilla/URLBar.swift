@@ -610,6 +610,11 @@ class URLBar: UIView {
             components?.user = nil
             components?.password = nil
             displayURL = urlText.text
+            print(url.absoluteString)
+            print(url.absoluteURL)
+            if UserDefaults.standard.object(forKey: url.absoluteString) == nil {
+                UserDefaults.standard.set(urlText.text, forKey: url.absoluteString)
+            }
             truncatedURL = components?.host
         }
         urlText.text = displayURL

@@ -640,8 +640,8 @@ extension BrowserViewController: WebControllerDelegate {
     func webController(_ controller: WebController, didUpdateCanGoForward canGoForward: Bool, webView: WKWebView) {
         urlBar.canGoForward = canGoForward
         browserToolbar.canGoForward = canGoForward
-        let query = getQuery(url: webView.url!)
-        if let searchedText = query["q"] {
+
+        if let searchedText  = UserDefaults.standard.string(forKey: (webView.url?.absoluteString)!) {
             urlBar.fillUrlBar(text: searchedText)
         } else {
             urlBar.fillUrlBar(text: (webView.url?.absoluteString)!)
